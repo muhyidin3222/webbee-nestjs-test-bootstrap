@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Get, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Event } from './entities/event.entity';
@@ -92,7 +92,16 @@ export class EventsService {
 
   @Get('events')
   async getEventsWithWorkshops() {
-    throw new Error('TODO task 1');
+    const res = this.eventRepository.find({
+      relations: ['workshops'],
+      order: {
+        createdAt: 'DESC',
+        workshops: {
+          id: 'ASC',
+        },
+      },
+    });
+    return res;
   }
 
   /*
@@ -162,6 +171,18 @@ export class EventsService {
      */
   @Get('futureevents')
   async getFutureEventWithWorkshops() {
-    throw new Error('TODO task 2');
+    const res = this.eventRepository.find({
+      where: {
+        id: In([2, 3]),
+      },
+      relations: ['workshops'],
+      order: {
+        createdAt: 'DESC',
+        workshops: {
+          id: 'ASC',
+        },
+      },
+    });
+    return res;
   }
 }

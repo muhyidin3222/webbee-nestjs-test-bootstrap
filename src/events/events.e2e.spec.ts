@@ -50,9 +50,7 @@ describe('events', () => {
     const response = await request(app.getHttpServer())
       .get('/events/events')
       .expect(200);
-
     const result = response.body;
-
     expect(result.length).toBe(3);
     expect(result[0].name).toBe('Laravel convention ' + date1);
     expect(result[0].workshops[0].name).toBe(
@@ -79,7 +77,6 @@ describe('events', () => {
       .expect(200);
 
     const result = response.body;
-
     expect(result.length).toBe(2);
     expect(result[0].name).toBe('Laravel convention ' + date2);
     expect(result[0].workshops[0].name).toBe(
